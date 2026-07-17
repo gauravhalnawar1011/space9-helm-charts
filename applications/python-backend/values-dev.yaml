@@ -1,0 +1,53 @@
+namespace: dev
+
+replicaCount: 2
+
+image:
+  repository: 074095961179.dkr.ecr.ap-south-1.amazonaws.com/space9-backend
+  tag: dev
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 5000
+
+config:
+  DB_HOST: production-eks-platform-dev-postgres.c5o6iswe6x6w.ap-south-1.rds.amazonaws.com
+  DB_PORT: "5432"
+  DB_NAME: studentdb
+  DB_SSLMODE: require
+  FLASK_ENV: production
+  GUNICORN_WORKERS: "2"
+
+secret:
+  DB_USERNAME: postgres
+  DB_PASSWORD: ChangeMe123!
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 300m
+    memory: 256Mi
+
+ingress:
+  enabled: true
+  className: alb
+  host: dev-api.space9.in
+  certificateArn: arn:aws:acm:ap-south-1:074095961179:certificate/xxxxxxxx
+  healthCheckPath: /health
+
+serviceAccount:
+  create: false
+  automount: true
+  annotations: {}
+  name: ""
+  
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
