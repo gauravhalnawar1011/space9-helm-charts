@@ -3,8 +3,8 @@ namespace: dev
 replicaCount: 2
 
 image:
-  repository: 074095961179.dkr.ecr.ap-south-1.amazonaws.com/space9-backend
-  tag: dev
+  repository: 074095961179.dkr.ecr.ap-south-1.amazonaws.com/space9-python-backend
+  tag: dev-f9c3eb8
   pullPolicy: Always
 
 service:
@@ -35,9 +35,25 @@ resources:
 ingress:
   enabled: true
   className: alb
+
   host: dev-api.space9.in
-  certificateArn: arn:aws:acm:ap-south-1:074095961179:certificate/xxxxxxxx
-  healthCheckPath: /health
+
+  annotations:
+    kubernetes.io/ingress.class: alb
+
+    alb.ingress.kubernetes.io/group.name: platform-dev
+    alb.ingress.kubernetes.io/group.order: "10"
+
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: "443"
+
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:074095961179:certificate/14e3568e-0172-4c56-a63f-4f239cddb696
+
+    alb.ingress.kubernetes.io/healthcheck-path: /health
+    
 
 serviceAccount:
   create: false
