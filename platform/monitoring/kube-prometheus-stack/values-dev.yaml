@@ -14,7 +14,7 @@ grafana:
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/target-type: ip
       alb.ingress.kubernetes.io/group.order: "20"
-      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:074095961179:certificate/14e3568e-0172-4c56-a63f-4f239cddb696
+      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:239713807106:certificate/a5c67648-ad41-4df6-928e-d976693b38f4
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
       alb.ingress.kubernetes.io/ssl-redirect: "443"
 
@@ -38,7 +38,7 @@ prometheus:
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/target-type: ip
       alb.ingress.kubernetes.io/group.order: "30"
-      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:074095961179:certificate/14e3568e-0172-4c56-a63f-4f239cddb696
+      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:239713807106:certificate/a5c67648-ad41-4df6-928e-d976693b38f4
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
       alb.ingress.kubernetes.io/ssl-redirect: "443"
 
