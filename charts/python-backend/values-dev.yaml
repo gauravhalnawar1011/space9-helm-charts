@@ -13,7 +13,7 @@ service:
   targetPort: 5000
 
 config:
-  DB_HOST: production-eks-platform-dev-postgres.c5o6iswe6x6w.ap-south-1.rds.amazonaws.com
+  DB_HOST: production-eks-platform-dev-postgres.ctkyce4k6j88.ap-south-1.rds.amazonaws.com
   DB_PORT: "5432"
   DB_NAME: studentdb
   DB_SSLMODE: require
