@@ -1,59 +1,52 @@
-argocd-image-updater:
-  crds:
-    install: true
-    keep: true
+crds:
+  install: true
+  keep: true
 
-  replicaCount: 1
+replicaCount: 1
 
-  image:
-    repository: quay.io/argoprojlabs/argocd-image-updater
-    pullPolicy: Always
+image:
+  repository: quay.io/argoprojlabs/argocd-image-updater
+  pullPolicy: Always
 
-  serviceAccount:
-    create: true
-    name: argocd-image-updater
-    annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::239713807106:role/dev-argocd-image-updater-role
+serviceAccount:
+  create: true
+  name: argocd-image-updater
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::239713807106:role/dev-argocd-image-updater-role
 
-  rbac:
-    enabled: true
+rbac:
+  enabled: true
 
-  createClusterRoles: true
+createClusterRoles: true
 
-  config:
-    name: argocd-image-updater-config
+config:
+  name: argocd-image-updater-config
 
-    kube.events: false
+  kube.events: false
 
-    git.user: ""
-    git.email: ""
+  git.user: ""
+  git.email: ""
 
-    log.level: info
+  log.level: info
 
-    registries:
-      - name: ECR
-        api_url: https://074095961179.dkr.ecr.ap-south-1.amazonaws.com
-        prefix: 074095961179.dkr.ecr.ap-south-1.amazonaws.com
-        ping: true
-        insecure: false
-        credentials: ext:/scripts/ecr-login.sh
-        credsexpire: 10h
+  registries:
+    - name: ECR
+      api_url: https://239713807106.dkr.ecr.ap-south-1.amazonaws.com
+      prefix: 239713807106.dkr.ecr.ap-south-1.amazonaws.com
+      ping: true
+      insecure: false
+      credentials: ext:/scripts/ecr-login.sh
+      credsexpire: 10h
 
-  authScripts:
-    enabled: true
-    name: argocd-image-updater-authscripts
+authScripts:
+  enabled: true
+  name: argocd-image-updater-authscripts
 
-    scripts:
-      ecr-login.sh: |
-        #!/bin/sh
-        aws ecr get-authorization-token \
-          --region ap-south-1 \
-          --output text \
-          --query 'authorizationData[].authorizationToken' \
-        | base64 -d
-
-  metadata:
-    annotations:
-      argocd-image-updater.argoproj.io/image-list: backend=074095961179.dkr.ecr.ap-south-1.amazonaws.com/space9-backend
-      argocd-image-updater.argoproj.io/write-back-method: git
-      argocd-image-updater.argoproj.io/git-branch: main
+  scripts:
+    ecr-login.sh: |
+      #!/bin/sh
+      aws ecr get-authorization-token \
+        --region ap-south-1 \
+        --output text \
+        --query 'authorizationData[].authorizationToken' \
+      | base64 -d

@@ -4,15 +4,22 @@ kind: Application
 metadata:
   name: backend-dev
   namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: backend=239713807106.dkr.ecr.ap-south-1.amazonaws.com/space9-python-backend
+    argocd-image-updater.argoproj.io/backend.update-strategy: newest-build
+    argocd-image-updater.argoproj.io/backend.helm.image-name: image.repository
+    argocd-image-updater.argoproj.io/backend.helm.image-tag: image.tag
+    argocd-image-updater.argoproj.io/write-back-method: git
+    argocd-image-updater.argoproj.io/git-branch: dev
+    argocd-image-updater.argoproj.io/write-back-target: helmvalues:values-dev.yaml
 
 spec:
   project: default
 
   source:
     repoURL: https://github.com/gauravhalnawar1011/space9-helm-charts.git
-    targetRevision: main
+    targetRevision: dev
     path: charts/python-backend
-
     helm:
       valueFiles:
         - values-dev.yaml
@@ -25,6 +32,5 @@ spec:
     automated:
       prune: true
       selfHeal: true
-
     syncOptions:
       - CreateNamespace=true
